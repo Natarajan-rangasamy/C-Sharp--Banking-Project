@@ -41,29 +41,35 @@ namespace ConsoleApp1
         User user = new User(0);
         Dictionary<string,string> accounts = new Dictionary<string,string>();
         
-        Console.WriteLine("Welcome to the Bank of Intrest :)");
+        Console.WriteLine($"Welcome to the Bank of Intrest :)");
         Console.WriteLine();
-            string name;
+            string name ="";
             string userId;
             string password;
-            Console.WriteLine("----------------Enter -----------------\n 1 -> to open bank account \n 2 -> to Login to your Existing account \n 3 -> to Close Application");
-            int options = Convert.ToInt32(Console.ReadLine());
             bool chk = true;
             bool check = false;
             while (chk) {
-
+                Console.WriteLine("----------------Enter -----------------\n 1 -> to open bank account \n 2 -> to Login to your Existing account \n 3 -> to Close Application");
+                int options = Convert.ToInt32(Console.ReadLine());
                 switch (options) {
                     case 1:
                         Console.WriteLine("Enter your Name ");
                         name = Console.ReadLine();
                         Console.WriteLine("Enter UserId i.e Unique for every customer..");
                         userId = Console.ReadLine();
-                        Console.WriteLine("Enter password");
+                        if (accounts.ContainsKey(userId))
+                        {
+                            Console.WriteLine("Sorry User already Exist!");
+                            break;
+                        }
+                        else { Console.WriteLine("Enter password");
                         password = Console.ReadLine();
                         Console.WriteLine("Account Created successfully");
                         accounts.Add(userId, password);
                         check = true;
                         chk = false;
+                        }
+                        
                         break;
                     case 2:
                         Console.WriteLine("Enter your userId");
@@ -99,7 +105,7 @@ namespace ConsoleApp1
                 }
                 while (check)
                 {
-                    Console.WriteLine("Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to Exit");
+                    Console.WriteLine($"Hey {name}, Welcome to the Bank of Interest!\n Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to Exit");
                     Console.WriteLine("----------------Enter your option Here--------------");
                     int option = Convert.ToInt32(Console.ReadLine());
                     switch (option)
@@ -131,8 +137,6 @@ namespace ConsoleApp1
                         case 4:
                             check = false;
                             chk = true;
-                            Console.WriteLine("----------------Enter -----------------\n 1 -> to open bank account \n 2 -> to Login to your Existing account \n 3 -> to Close Application");
-                            options = Convert.ToInt32(Console.ReadLine());
                             break;
                         default:
                             Console.WriteLine("Enter the appropriate Values");
