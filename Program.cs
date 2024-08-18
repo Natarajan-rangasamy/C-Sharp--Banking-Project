@@ -47,10 +47,10 @@ namespace ConsoleApp1
 
             Console.WriteLine($"Welcome to the Bank of Intrest :)");
             Console.WriteLine();
-            string name = "Vijay";
+            string name ;
             string userId;
             string password;
-            users.Add(new User("Vijay","Goat","Trailer"));
+            /*users.Add(new User("Vijay","Goat","Trailer"));
             users.Add(new User("Ajith", "VM", "Teaser"));
             User use;
             foreach(User user in users)
@@ -59,13 +59,13 @@ namespace ConsoleApp1
                 {
                     Console.WriteLine("Found");
                     use = user;
-                    testing(use);
+         
                     
                 }
                 Console.WriteLine(user.Name +" "+user.Id+" "+user.Balance);
-            }
+            }*/
             
-            bool chk = false;
+            bool chk = true;
             bool check = false;
             while (chk)
             {
@@ -90,8 +90,7 @@ namespace ConsoleApp1
                             Console.WriteLine("Account Created successfully");
                             accounts.Add(userId, password);
                             users.Add(new User(userId,name,password));
-                            check = true;
-                            chk = false;
+                            Console.WriteLine("============================X===========================");
                         }
 
                         break;
@@ -123,7 +122,7 @@ namespace ConsoleApp1
                                 if (userId == user.Id)
                                 {
                                     currentUser = user;
-                                    currentUser.Balance = user.Balance;
+                                    Console.WriteLine("Account Found");
                                 }
                             }
                             chk = false;
@@ -185,10 +184,7 @@ namespace ConsoleApp1
 
 
         }
-        public static void testing(User user)
-        {
-            Console.WriteLine(user.Password);
-        }
+        
 
     }
 }
