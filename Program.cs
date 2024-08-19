@@ -10,6 +10,7 @@ namespace ConsoleApp1
 
         private string ID;
         public double Balance { set; get; }
+        List<string> transactions = new List<string>();
 
         public Account(string id) => this.ID = id;
         public void addBalance(double balance)
@@ -21,6 +22,20 @@ namespace ConsoleApp1
         {
             this.Balance -= balance;
         }
+        public void setTransaction(string transaction)
+        {
+            this.transactions.Add(transaction);
+        }
+        public void displayTransactions()
+        {
+            int i = 1;
+            Console.WriteLine("S.no --Date---------Time-------------Transaction Mode--------Amount------------Transaction status------------Balance   ");
+            foreach (string transaction in transactions)
+            {
+                Console.WriteLine(i++ +". "+transaction);
+            }
+        }
+        
     }
     class User : Account
     {
@@ -47,6 +62,8 @@ namespace ConsoleApp1
 
             Console.WriteLine($"Welcome to the Bank of Intrest :)");
             Console.WriteLine();
+            DateTime now = DateTime.Now;
+
             string name ;
             string userId;
             string password;
@@ -64,7 +81,6 @@ namespace ConsoleApp1
                 }
                 Console.WriteLine(user.Name +" "+user.Id+" "+user.Balance);
             }*/
-            
             bool chk = true;
             bool check = false;
             while (chk)
@@ -92,7 +108,7 @@ namespace ConsoleApp1
                             users.Add(new User(userId,name,password));
                             Console.WriteLine("============================X===========================");
                         }
-
+                        
                         break;
                     case 2:
                         Console.WriteLine("Enter your userId");
@@ -138,7 +154,7 @@ namespace ConsoleApp1
                 }
                 while (check)
                 {
-                    Console.WriteLine($"Hey {currentUser.Name}, Welcome to the Bank of Interest!\n Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to Exit");
+                    Console.WriteLine($"Hey {currentUser.Name}, Welcome to the Bank of Interest!\n Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to View Last Transactions \n 5 -> Exit");
                     Console.WriteLine("----------------Enter your option Here--------------");
                     int option = Convert.ToInt32(Console.ReadLine());
                     switch (option)
@@ -148,6 +164,7 @@ namespace ConsoleApp1
                             double amount = Convert.ToDouble(Console.ReadLine());
                             currentUser.addBalance(amount);
                             Console.WriteLine($"Cash deposited! current Balance : ${currentUser.Balance}");
+                            currentUser.setTransaction($" {now.ToString("dd-MM-yyyy")}  |  {now.ToString("h/mm/ss t")}M         Cash Deposit               +{amount}             Success               {currentUser.Balance}");
                             currentUser.currentBalance();
                             Console.WriteLine("===========================X============================");
                             break;
@@ -159,17 +176,24 @@ namespace ConsoleApp1
                             double wamount = Convert.ToDouble(Console.ReadLine());
                             if (wamount > currentUser.Balance)
                             {
-                                Console.WriteLine($"The entered sum is greater than your current balance your balance is ${currentUser.Balance}");
+                                Console.WriteLine($"The entered sum is Exceeds your current balance, Your balance is ${currentUser.Balance}");
+                                currentUser.setTransaction($" {now.ToString("dd-MM-yyyy")}  |  {now.ToString("h/mm/ss t")}M       Cash Withdrawl              -{wamount}              Failed              {currentUser.Balance}");
+                                Console.WriteLine("=========================X================================");
                                 break;
                             }
                             else
                             {
                                 currentUser.withdrawAmount(wamount);
                                 Console.WriteLine($"Cash withdrawl is successfull and your current balance is {currentUser.Balance}");
+                                currentUser.setTransaction($" {now.ToString("dd-MM-yyyy")}  |  {now.ToString("h/mm/ss t")}M       Cash Withdrawl               -{wamount}             Success           {currentUser.Balance}");
                                 Console.WriteLine("=========================X================================");
                             }
+
                             break;
                         case 4:
+                            currentUser.displayTransactions(); 
+                            break;
+                        case 5:
                             check = false;
                             chk = true;
                             break;
