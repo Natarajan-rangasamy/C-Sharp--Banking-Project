@@ -65,7 +65,7 @@ namespace ConsoleApp1
             DateTime now = DateTime.Now;
 
             string name ;
-            string userId;
+            string userId="";
             string password;
             /*users.Add(new User("Vijay","Goat","Trailer"));
             users.Add(new User("Ajith", "VM", "Teaser"));
@@ -154,7 +154,7 @@ namespace ConsoleApp1
                 }
                 while (check)
                 {
-                    Console.WriteLine($"Hey {currentUser.Name}, Welcome to the Bank of Interest!\n Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to View Last Transactions \n 5 -> Exit");
+                    Console.WriteLine($"Hey {currentUser.Name}, Welcome to the Bank of Interest!\n Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to View Last Transactions \n 5 -> to Close the Account\n 6 -> Exit");
                     Console.WriteLine("----------------Enter your option Here--------------");
                     int option = Convert.ToInt32(Console.ReadLine());
                     switch (option)
@@ -194,6 +194,34 @@ namespace ConsoleApp1
                             currentUser.displayTransactions(); 
                             break;
                         case 5:
+                            Console.WriteLine($"Dear {currentUser.Name}, You have ${currentUser.Balance} in your account\n Still would you like to close the account?");
+                            Console.WriteLine("Press 'Y' for Yes and 'N' for No");
+                            string choice = Console.ReadLine();
+                            choice = choice.ToUpper();
+                            if(choice == "Y")
+                            {
+                                users.Remove(currentUser);
+                                accounts.Remove(userId);
+                                Console.WriteLine("Account closed permanently!");
+                                // foreach (User us in users)
+                                /* {
+                                     Console.WriteLine(us.Name);
+                                     Console.WriteLine(accounts[us.Id]);
+                                 }*/
+                                check = false;
+                                chk = true;
+                                break ;
+                            }
+                            else if (choice == "N")
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Enter Appropriate values only");
+                            }
+                            break;
+                        case 6:
                             check = false;
                             chk = true;
                             break;
