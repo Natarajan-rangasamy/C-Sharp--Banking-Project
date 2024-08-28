@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Transactions;
 namespace ConsoleApp1
 {
@@ -29,7 +30,7 @@ namespace ConsoleApp1
         public void displayTransactions()
         {
             int i = 1;
-            Console.WriteLine("S.no --Date---------Time-------------Transaction Mode--------Amount------------Transaction status------------Balance   ");
+            Console.WriteLine("S.no --Date---------Time-------------Transaction Mode--------Amount------------Transaction status--------Balance------");
             foreach (string transaction in transactions)
             {
                 Console.WriteLine(i++ +". "+transaction);
@@ -42,14 +43,23 @@ namespace ConsoleApp1
         public string Name { set; get; }
         public string Password { set; get; }
         public string Id { set; get; }
+        public string mobileNumber {  set; get; }
+        public string Address { set; get; }
+        public string Email { set; get; }
+        public char Gender { set; get; }
+
+        public int  AccountNumber = new Random().Next(600000000,900000000);
 
         public User(string id,string name,string password) : base(id)
         {
             this.Id = id;
             this.Name = name;
             this.Password = password;
+            this.mobileNumber = "**********";
+            this.Email = "Please Update";
+            this.Address = "Please Update";
         }
-
+        
     }
     internal class Program
 
@@ -59,8 +69,13 @@ namespace ConsoleApp1
             Dictionary<string, string> accounts = new Dictionary<string, string>();
             List<User> users = new List<User>();
             User currentUser = new User("","","");
-
-            Console.WriteLine($"Welcome to the Bank of Intrest :)");
+            string welcomeNote = "Hey Buddy,Welcome to the Bank of Intrest :)";
+            for(int i = 0; i < welcomeNote.Length; i++)
+            {
+                Console.Write(welcomeNote[i]);
+                Thread.Sleep(100);
+            }
+            
             Console.WriteLine();
             DateTime now = DateTime.Now;
 
@@ -154,7 +169,7 @@ namespace ConsoleApp1
                 }
                 while (check)
                 {
-                    Console.WriteLine($"Hey {currentUser.Name}, Welcome to the Bank of Interest!\n Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to View Last Transactions \n 5 -> to Close the Account\n 6 -> Exit");
+                    Console.WriteLine($"Hey {currentUser.Name}, Welcome to the Bank of Interest!\n Enter\n 1 -> For Deposit \n 2 -> to view balance\n 3 -> For Withdrawl \n 4 -> to View Last Transactions \n 5 -> to update your Account details\n 6 -> to Close the Account\n 7 -> Exit");
                     Console.WriteLine("----------------Enter your option Here--------------");
                     int option = Convert.ToInt32(Console.ReadLine());
                     switch (option)
@@ -194,6 +209,35 @@ namespace ConsoleApp1
                             currentUser.displayTransactions(); 
                             break;
                         case 5:
+                            Console.WriteLine($"Hey {currentUser.Name}, Please choose the below options to update your account \nTo Update your Name ,User Id and Password Please visit the nearest Branch");
+                            Console.WriteLine();
+                            Console.WriteLine("------------Enter------------ \n 1 -> To Update Mobile Number \n 2 -> to Update Address \n 3 -> For Gender \n 4 -> to Update Email Address \n 5 -> to Exit");
+                            int opt = Convert.ToInt32(Console.ReadLine());
+                            switch (opt)
+                            {
+                                case 1:
+                                    currentUser.mobileNumber = Console.ReadLine();
+                                    Console.WriteLine("Mobile Number updated!");
+                                    break;
+                                case 2:
+                                    currentUser.Address = Console.ReadLine();
+                                    Console.WriteLine("Address Updated!");
+                                    break;
+                                case 3:
+                                    Console.WriteLine("Please Enter 'M' for Male 'F' for Female and 'T' for TransGender");
+                                    currentUser.Gender = Convert.ToChar(Console.ReadLine());
+                                    break;
+                                case 4:
+                                    currentUser.Email = Console.ReadLine();
+                                    break;
+                                case 5:
+                                    break;
+                                default:
+                                    Console.WriteLine("Inappropriate option");
+                                    break;
+                            }
+                            break; 
+                        case 6:
                             Console.WriteLine($"Dear {currentUser.Name}, You have ${currentUser.Balance} in your account\n Still would you like to close the account?");
                             Console.WriteLine("Press 'Y' for Yes and 'N' for No");
                             string choice = Console.ReadLine();
@@ -221,7 +265,7 @@ namespace ConsoleApp1
                                 Console.WriteLine("Enter Appropriate values only");
                             }
                             break;
-                        case 6:
+                        case 7:
                             check = false;
                             chk = true;
                             break;
@@ -234,10 +278,15 @@ namespace ConsoleApp1
 
             }
 
+            foreach (var user in users) {
+                Console.WriteLine(user.Gender);
+                Console.WriteLine(user.mobileNumber);
+                Console.WriteLine(user.AccountNumber);
+                Console.WriteLine(user.Email);
+                Console.WriteLine(user.Address);
+            }
 
         }
-        
-
     }
 }
 
