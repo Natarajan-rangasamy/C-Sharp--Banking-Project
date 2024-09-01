@@ -133,7 +133,7 @@ namespace ConsoleApp1
                         if (!accounts.ContainsKey(userId))
                         {
                             Console.WriteLine("User Not Exist \n check your User_Id and Password again!");
-                            chk = false;
+                            chk = true;
                             break;
 
                         }
@@ -141,7 +141,7 @@ namespace ConsoleApp1
                         else if (accounts[userId] != password)
                         {
                             Console.WriteLine("Check your password and try again!");
-                            chk = false;
+                            chk = true;
                             break;
                         }
                         else
@@ -277,15 +277,6 @@ namespace ConsoleApp1
                 }
 
             }
-
-            foreach (var user in users) {
-                Console.WriteLine(user.Gender);
-                Console.WriteLine(user.mobileNumber);
-                Console.WriteLine(user.AccountNumber);
-                Console.WriteLine(user.Email);
-                Console.WriteLine(user.Address);
-            }
-
         }
     }
 }
